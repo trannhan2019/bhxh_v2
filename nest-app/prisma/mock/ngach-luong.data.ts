@@ -1,0 +1,92 @@
+export const ngachLuongData = [
+  {
+    id: 1,
+    maNgach: 'QL.05',
+    tenNgach: 'Chủ tịch Hội đồng quản trị',
+    soThuTu: 1,
+  },
+  {
+    id: 2,
+    maNgach: 'QL.01',
+    tenNgach: 'Tổng Giám đốc',
+    soThuTu: 2,
+  },
+  {
+    id: 3,
+    maNgach: 'QL.02',
+    tenNgach: 'Phó Tổng Giám đốc',
+    soThuTu: 3,
+  },
+  {
+    id: 4,
+    maNgach: 'QL.03',
+    tenNgach: 'Kế toán trưởng',
+    soThuTu: 4,
+  },
+  {
+    id: 5,
+    maNgach: 'A4',
+    tenNgach: 'Chuyên viên chính, Kinh tế viên chính, Kỹ sư chính',
+    soThuTu: 5,
+  },
+  {
+    id: 6,
+    maNgach: 'A3',
+    tenNgach: 'Chuyên viên, Kinh tế viên, Kỹ sư',
+    soThuTu: 6,
+  },
+  {
+    id: 7,
+    maNgach: 'A2',
+    tenNgach: 'Cán sự, Nghiệp vụ, Kỹ thuật viên, Kế toán viên',
+    soThuTu: 7,
+  },
+  {
+    id: 8,
+    maNgach: 'A1',
+    tenNgach: 'Nhân viên thừa hành, phục vụ',
+    soThuTu: 8,
+  },
+  {
+    id: 9,
+    maNgach: 'B4',
+    tenNgach: 'Vận hành máy, vận hành điện trong nhà máy điện (Trưởng ca)',
+    soThuTu: 9,
+  },
+  {
+    id: 10,
+    maNgach: 'B3',
+    tenNgach: 'Vận hành máy, vận hành điện trong nhà máy điẹn (Vận hành chính)',
+    soThuTu: 10,
+  },
+  {
+    id: 11,
+    maNgach: 'B2',
+    tenNgach: 'Vận hành máy, vận hành điện trong nhà máy điện (Vận hành phụ)',
+    soThuTu: 11,
+  },
+  {
+    id: 12,
+    maNgach: 'B1',
+    tenNgach: 'Sửa chữa cơ, điện phụ trong hang hầm nhà máy điện (Nhân viên sửa chữa)',
+    soThuTu: 12,
+  },
+  {
+    id: 13,
+    maNgach: 'VT',
+    tenNgach: 'Văn thư',
+    soThuTu: 13,
+  },
+  {
+    id: 14,
+    maNgach: 'LX',
+    tenNgach: 'Lái xe con, xe tải dưới 3,5 tấn',
+    soThuTu: 14,
+  },
+  {
+    id: 15,
+    maNgach: 'BV',
+    tenNgach: 'Bảo vệ',
+    soThuTu: 15,
+  },
+];

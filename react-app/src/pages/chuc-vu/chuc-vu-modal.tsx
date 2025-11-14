@@ -1,0 +1,164 @@
+
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Loader } from "lucide-react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { chucVuSchema } from "@/lib/schema";
+import { chucVuDefaultValues, type TChucVu } from "@/types/chuc-vu";
+import { createChucVu, updateChucVu } from "@/apis/chuc-vu";
+
+interface Props {
+  open: boolean;
+  setOpen: (open: boolean) => void;
+  chucVu?: TChucVu | null;
+}
+
+export function ChucVuModal({ open, setOpen, chucVu }: Props) {
+  const queryClient = useQueryClient();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (chucVu) {
+      form.setValue("ten", chucVu.ten);
+      form.setValue("tenVietTat", chucVu.tenVietTat);
+      form.setValue("soThuTu", chucVu.soThuTu);
+    } else {
+      form.reset();
+    }
+  }, [open, chucVu]);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: (values: Omit<TChucVu,'id'>) => {
+      if (chucVu) {
+        return updateChucVu(chucVu.id, values);
+      }
+      return createChucVu(values);
+    },
+  });
+
+  const form = useForm({
+    resolver: zodResolver(chucVuSchema),
+    defaultValues: chucVuDefaultValues,
+  });
+
+  const submit = (values: Omit<TChucVu,'id'>) => {
+    mutate(
+      values,
+      {
+        onSuccess: () => {
+          setOpen(false);
+          form.reset();
+          toast.success("Cập nhật chức vụ thành công");
+          queryClient.invalidateQueries({
+            queryKey: ["chuc-vus"],
+          });
+        },
+        onError: () => {
+          toast.error("Cập nhật chức vụ thất bại");
+        },
+      }
+    );
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={handleClose}>
+      <DialogContent className="sm:max-w-[425px]">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(submit)}>
+            <DialogHeader>
+              <DialogTitle>
+                {chucVu ? "Cập nhật chức vụ" : "Thêm chức vụ"}
+              </DialogTitle>
+              <DialogDescription>
+                {chucVu
+                  ? "Cập nhật thông tin chức vụ."
+                  : "Điền thông tin để tạo mới chức vụ."}
+              </DialogDescription>
+            </DialogHeader>
+            <div className="mt-2 grid gap-4">
+              <FormField
+                control={form.control}
+                name="ten"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tên chức vụ</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="tenVietTat"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tên viết tắt</FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="soThuTu"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Số thứ tự</FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="number"
+                        value={field.value?.toString() ?? ''}
+                        onChange={(e) => field.onChange(e.target.value === '' ? undefined : Number(e.target.value))}
+                        onBlur={field.onBlur}
+                        name={field.name}
+                        ref={field.ref}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <DialogFooter className="mt-3">
+              <DialogClose asChild>
+                <Button variant="outline">Cancel</Button>
+              </DialogClose>
+              <Button type="submit" disabled={isPending}>
+                {isPending && <Loader className="mr-2 h-4 w-4 animate-spin" />}
+                Save changes
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+}

@@ -1,0 +1,125 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  name     String
+  email    String @unique
+  password String
+}
+
+model Phong {
+  id         Int        @id @default(autoincrement())
+  ten        String
+  tenVietTat String
+  soThuTu    Int        @default(0)
+  nhanViens  NhanVien[]
+}
+
+model ChucVu {
+  id         Int        @id @default(autoincrement())
+  ten        String
+  tenVietTat String
+  soThuTu    Int        @default(0)
+  nhanViens  NhanVien[]
+}
+
+model NhanVien {
+  id  Int    @id @default(autoincrement())
+  ten String
+
+  phongId Int
+  phong   Phong @relation(fields: [phongId], references: [id])
+
+  chucVuId Int
+  chucVu   ChucVu @relation(fields: [chucVuId], references: [id])
+
+  soThuTu      Int       @default(0)
+  trangThai    Boolean   @default(true)
+  daNghiViec   DateTime?
+  nhanVienVhsc Boolean   @default(false)
+
+  bhxh Bhxh? 
+}
+
+model LuongToiThieuVung {
+  id             Int      @id @default(autoincrement())
+  mucLuong       Int
+  thoiGianApDung DateTime
+  canCuPhapLy    String?
+  apDung         Boolean  @default(false)
+}
+
+model NgachLuong {
+  id        Int        @id @default(autoincrement())
+  tenNgach  String
+  maNgach   String
+  soThuTu      Int       @default(0)
+  
+  bacLuongs BacLuong[]
+
+  bhxhs Bhxh[]
+}
+
+model BacLuong {
+  id              Int        @id @default(autoincrement())
+  bac             Int
+  heSo            Float
+  thoiGianNangBac Int //năm
+  
+  ngachLuongId    Int
+  ngachLuong      NgachLuong @relation(fields: [ngachLuongId], references: [id])
+
+  bhxhs Bhxh[]
+}
+
+model HeSo {
+  id        Int       @id @default(autoincrement())
+  chucDanh  String
+  heSo      Float
+  loai      HeSoLoai
+
+  // # Quan hệ ngược
+  bhxhChucVus     Bhxh[] @relation("bhxhChucVuRelation") 
+  bhxhTrachNhiems Bhxh[] @relation("bhxhTrachNhiemRelation") 
+}
+
+enum HeSoLoai {
+  CHUC_VU
+  TRACH_NHIEM
+}
+
+model Bhxh {
+  id        Int       @id @default(autoincrement())
+
+  nhanVienId Int @unique
+  nhanVien NhanVien @relation(fields: [nhanVienId], references: [id])
+
+  ngachLuongId Int
+  ngachLuong NgachLuong @relation(fields: [ngachLuongId], references: [id])
+
+  bacLuongId Int
+  bacLuong BacLuong @relation(fields: [bacLuongId], references: [id])
+
+  heSoChucVuId Int?
+  heSoChucVu HeSo? @relation("bhxhChucVuRelation",fields: [heSoChucVuId], references: [id])
+
+  heSoTrachNhiemId Int?
+  heSoTrachNhiem HeSo? @relation("bhxhTrachNhiemRelation",fields: [heSoTrachNhiemId], references: [id])
+
+  ngayApDung DateTime  
+  ghiChu String?
+  soThuTu Int @default(0)
+}
