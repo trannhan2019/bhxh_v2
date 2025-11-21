@@ -10,6 +10,10 @@ import { NhanVienModule } from './nhan-vien/nhan-vien.module';
 import { LuongToiThieuVungModule } from './luong-toi-thieu-vung/luong-toi-thieu-vung.module';
 import { BacLuongModule } from './bac-luong/bac-luong.module';
 import { HeSoModule } from './he-so/he-so.module';
+import { BhxhModule } from './bhxh/bhxh.module';
+import { LichSuBhxhModule } from './lich-su-bhxh/lich-su-bhxh.module';
+import { UserModule } from './user/user.module';
+import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -21,7 +25,11 @@ import { HeSoModule } from './he-so/he-so.module';
     NhanVienModule,
     LuongToiThieuVungModule,
     BacLuongModule,
-    HeSoModule
+    HeSoModule,
+    BhxhModule,
+    LichSuBhxhModule,
+    UserModule,
+    TaskModule
   ],
   controllers: [AppController],
   providers: [AppService],

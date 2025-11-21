@@ -22,11 +22,6 @@ export class NhanVienDto {
   @IsNotEmpty()
   trangThai: boolean = true;
 
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  daNghiViec?: Date;
-
   @IsBoolean()
   @IsNotEmpty()
   nhanVienVhsc: boolean = false;

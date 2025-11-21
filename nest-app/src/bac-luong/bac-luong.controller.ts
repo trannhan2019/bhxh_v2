@@ -13,6 +13,16 @@ export class BacLuongController {
       async list() {
         return this.bacLuongService.list();
       }
+
+      @Get('ngach-luong')
+      async listNgachLuong(){
+        return await this.bacLuongService.listNgachLuong()
+      }
+
+      @Get('ngach-luong/:ngachLuongId')
+      async listBacLuongByNgachLuong(@Param('ngachLuongId', ParseIntPipe) ngachLuongId: number){
+        return await this.bacLuongService.listBacLuongByNgachLuong(ngachLuongId)
+      }
     
       @Post()
       async store(@Body() data: NgachLuongDto) {

@@ -26,6 +26,11 @@ export class NhanVienController {
     return this.nhanVienService.list(query);
   }
 
+  @Get('no-bhxh')
+  async listNoBhxh() {
+    return await this.nhanVienService.listNoBhxh();
+  }
+
   @Post()
   async store(@Body() data: NhanVienDto) {
     return await this.nhanVienService.store(data);
@@ -48,4 +53,5 @@ export class NhanVienController {
   getById(@Param('id', ParseIntPipe) id: number) {
     return this.nhanVienService.getById(id);
   }
+  
 }

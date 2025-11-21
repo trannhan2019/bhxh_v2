@@ -116,7 +116,7 @@ export function HeSoModal({ open, setOpen, heSo }: Props) {
                     >
                       <FormControl className="w-full">
                         <SelectTrigger>
-                          <SelectValue placeholder="Chọn phòng/đơn vị" />
+                          <SelectValue placeholder="Chọn loại hệ số phụ cấp" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>

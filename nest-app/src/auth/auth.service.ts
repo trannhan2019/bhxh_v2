@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { comparePassword, hashPassword } from 'src/utils/bcrypt';
 import { RegisterDto } from './auth.register.dto';
+import { Role } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -34,11 +35,12 @@ export class AuthService {
     };
   }
 
-  async register() {
+  async registerSuperAdmin() {
     const user: RegisterDto = {
-      name: 'admin',
-      email: 'admin@admin.com',
+      name: 'super admin',
+      email: 'superadmin@admin.com',
       password: '123456789',
+      role: Role.ADMIN,
     };
     const checkUser = await this.prisma.user.findUnique({
       where: {
@@ -54,6 +56,7 @@ export class AuthService {
         name: user.name,
         email: user.email,
         password: hashedPassword,
+        role: Role.ADMIN,
       },
     });
     return newUser;

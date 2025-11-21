@@ -15,9 +15,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { BadgeCheckIcon, MoreHorizontal, Pencil, Trash } from "lucide-react";
+import {
+  BadgeCheckIcon,
+  MoreHorizontal,
+  Pencil,
+  Search,
+  Trash,
+} from "lucide-react";
 import type { TNhanVienRes } from "@/types/nhan-vien";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router";
 
 export function NhanVienList({
   nhanViens,
@@ -32,6 +39,8 @@ export function NhanVienList({
   currentPage: number;
   pageSize: number;
 }) {
+  const navigate = useNavigate();
+
   return (
     <div className="rounded-xl border p-2 mt-4">
       <Table className="caption-top">
@@ -58,12 +67,17 @@ export function NhanVienList({
           )}
           {nhanViens.map((item, idx) => (
             <TableRow key={item.id}>
-              <TableCell className="font-medium">{(currentPage - 1) * pageSize + idx + 1}</TableCell>
+              <TableCell className="font-medium">
+                {(currentPage - 1) * pageSize + idx + 1}
+              </TableCell>
               <TableCell>{item.ten}</TableCell>
               <TableCell>{item.phong.ten}</TableCell>
               <TableCell>{item.chucVu.ten}</TableCell>
               <TableCell>
-                <Badge variant={item.trangThai ? "default" : "destructive"}><BadgeCheckIcon />{item.trangThai ? "Hoạt động" : "Ngừng hoạt động"}</Badge>
+                <Badge variant={item.trangThai ? "default" : "destructive"}>
+                  <BadgeCheckIcon />
+                  {item.trangThai ? "Đang hoạt động" : "Đã nghỉ việc"}
+                </Badge>
               </TableCell>
               <TableCell>
                 <DropdownMenu>
@@ -76,8 +90,12 @@ export function NhanVienList({
                   <DropdownMenuContent align="end">
                     <DropdownMenuGroup>
                       <DropdownMenuItem
-                        onClick={() => handleOpenModal(item)}
+                        onClick={() => navigate(`/bhxh/${item.bhxh.id}`)}
                       >
+                        <Search className="size-4" />
+                        Xem chi tiết
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleOpenModal(item)}>
                         <Pencil className="size-4" />
                         Edit
                       </DropdownMenuItem>

@@ -13,6 +13,11 @@ export class HeSoController {
       async list() {
         return this.heSoService.list();
       }
+
+      @Get('loai')
+      async listByLoai() {
+        return this.heSoService.listByLoai();
+      }
     
       @Post()
       async store(@Body() data: HeSoDto) {

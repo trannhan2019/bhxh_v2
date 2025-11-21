@@ -2,9 +2,10 @@ import { useAuthStore } from '@/stores/auth'
 import axios from 'axios'
 import NProgress from 'nprogress'
 
+const hostname = window.location.hostname;
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: `http://${hostname}:5000/api`,
   headers: {
     'Content-Type': 'application/json',
   },

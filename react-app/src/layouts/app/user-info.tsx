@@ -1,13 +1,13 @@
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { useInitials } from "@/hooks/use-initials";
 
-import { type TUser } from "@/types/user";
+import { type TAuthUser } from "@/types/auth";
 
 export function UserInfo({
   user,
   showEmail = false,
 }: {
-  user: TUser;
+  user: TAuthUser;
   showEmail?: boolean;
 }) {
   const getInitials = useInitials();

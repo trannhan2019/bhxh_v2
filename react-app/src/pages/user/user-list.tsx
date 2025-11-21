@@ -14,57 +14,41 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { TUser } from "@/types/user";
 import { Button } from "@/components/ui/button";
-import { BadgeCheckIcon, MoreHorizontal, Pencil, Trash } from "lucide-react";
-import type { TNhanVienRes } from "@/types/nhan-vien";
-import { Badge } from "@/components/ui/badge";
+import { MoreHorizontal, Pencil, Trash } from "lucide-react";
 
-export function NhanVienList({
-  nhanViens,
+export function UserList({
+  users,
   handleOpenModal,
   handleOpenAlert,
-  currentPage,
-  pageSize,
 }: {
-  nhanViens: TNhanVienRes[];
-  handleOpenModal: (item: TNhanVienRes | null) => void;
+  users: TUser[];
+  handleOpenModal: (item: TUser | null) => void;
   handleOpenAlert: (id: number) => void;
-  currentPage: number;
-  pageSize: number;
 }) {
   return (
     <div className="rounded-xl border p-2 mt-4">
       <Table className="caption-top">
         <TableCaption className="text-left mb-2">
-          Danh sách phòng/đơn vị
+          Danh sách người dùng
         </TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead className="w-[100px]">STT</TableHead>
-            <TableHead>Họ và tên</TableHead>
-            <TableHead>Phòng</TableHead>
-            <TableHead>Chức vụ</TableHead>
-            <TableHead>Trạng thái</TableHead>
+            <TableHead>Tên người dùng</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Quyền</TableHead>
             <TableHead>Thao tác</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {nhanViens.length === 0 && (
-            <TableRow>
-              <TableCell colSpan={6} className="h-24 text-center">
-                Không có dữ liệu
-              </TableCell>
-            </TableRow>
-          )}
-          {nhanViens.map((item, idx) => (
-            <TableRow key={item.id}>
-              <TableCell className="font-medium">{(currentPage - 1) * pageSize + idx + 1}</TableCell>
-              <TableCell>{item.ten}</TableCell>
-              <TableCell>{item.phong.ten}</TableCell>
-              <TableCell>{item.chucVu.ten}</TableCell>
-              <TableCell>
-                <Badge variant={item.trangThai ? "default" : "destructive"}><BadgeCheckIcon />{item.trangThai ? "Hoạt động" : "Ngừng hoạt động"}</Badge>
-              </TableCell>
+          {users.map((user, idx) => (
+            <TableRow key={user.id}>
+              <TableCell className="font-medium">{idx + 1}</TableCell>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.role}</TableCell>
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
@@ -76,14 +60,14 @@ export function NhanVienList({
                   <DropdownMenuContent align="end">
                     <DropdownMenuGroup>
                       <DropdownMenuItem
-                        onClick={() => handleOpenModal(item)}
+                        onClick={() => handleOpenModal(user)}
                       >
                         <Pencil className="size-4" />
                         Edit
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         className="text-red-500"
-                        onClick={() => handleOpenAlert(item.id)}
+                        onClick={() => handleOpenAlert(user.id)}
                       >
                         <Trash className="size-4 text-red-500" />
                         Delete

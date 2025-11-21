@@ -30,3 +30,8 @@ export const updateNhanVien = (id: number, nhanVien: Omit<TNhanVien, "id">) => {
 export const deleteNhanVien = (id: number) => {
   return axiosClient.delete(`${apiUrl}/${id}`);
 };
+
+export const getNhanVienNoBhxh = async () => {
+  const res = await axiosClient.get<TNhanVienRes[]>(`${apiUrl}/no-bhxh`);
+  return res.data;
+};

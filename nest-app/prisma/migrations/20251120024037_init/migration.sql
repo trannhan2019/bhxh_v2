@@ -30,7 +30,6 @@ CREATE TABLE "NhanVien" (
     "chucVuId" INTEGER NOT NULL,
     "soThuTu" INTEGER NOT NULL DEFAULT 0,
     "trangThai" BOOLEAN NOT NULL DEFAULT true,
-    "daNghiViec" DATETIME,
     "nhanVienVhsc" BOOLEAN NOT NULL DEFAULT false,
     CONSTRAINT "NhanVien_phongId_fkey" FOREIGN KEY ("phongId") REFERENCES "Phong" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "NhanVien_chucVuId_fkey" FOREIGN KEY ("chucVuId") REFERENCES "ChucVu" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
@@ -87,6 +86,25 @@ CREATE TABLE "Bhxh" (
     CONSTRAINT "Bhxh_bacLuongId_fkey" FOREIGN KEY ("bacLuongId") REFERENCES "BacLuong" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Bhxh_heSoChucVuId_fkey" FOREIGN KEY ("heSoChucVuId") REFERENCES "HeSo" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
     CONSTRAINT "Bhxh_heSoTrachNhiemId_fkey" FOREIGN KEY ("heSoTrachNhiemId") REFERENCES "HeSo" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "LichSuBhxh" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "nhanVienId" INTEGER NOT NULL,
+    "ngachLuongId" INTEGER NOT NULL,
+    "bacLuongId" INTEGER NOT NULL,
+    "heSoChucVuId" INTEGER,
+    "heSoTrachNhiemId" INTEGER,
+    "luongToiThieuVungId" INTEGER NOT NULL,
+    "ngayApDung" DATETIME NOT NULL,
+    "ghiChu" TEXT,
+    CONSTRAINT "LichSuBhxh_nhanVienId_fkey" FOREIGN KEY ("nhanVienId") REFERENCES "NhanVien" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "LichSuBhxh_ngachLuongId_fkey" FOREIGN KEY ("ngachLuongId") REFERENCES "NgachLuong" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "LichSuBhxh_bacLuongId_fkey" FOREIGN KEY ("bacLuongId") REFERENCES "BacLuong" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "LichSuBhxh_heSoChucVuId_fkey" FOREIGN KEY ("heSoChucVuId") REFERENCES "HeSo" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT "LichSuBhxh_heSoTrachNhiemId_fkey" FOREIGN KEY ("heSoTrachNhiemId") REFERENCES "HeSo" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT "LichSuBhxh_luongToiThieuVungId_fkey" FOREIGN KEY ("luongToiThieuVungId") REFERENCES "LuongToiThieuVung" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateIndex

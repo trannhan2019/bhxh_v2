@@ -1,4 +1,9 @@
-import type { TUser } from "./user";
+
+
+export type TAuthUser = {
+    name: string;
+    email: string;
+}
 
 export interface TLogin {
     email: string;
@@ -11,6 +16,6 @@ export const loginDefaultValues: TLogin = {
 }
 
 export interface TAuth {
-    user: TUser | null;
+    user: TAuthUser | null;
     token: string | null;
 }

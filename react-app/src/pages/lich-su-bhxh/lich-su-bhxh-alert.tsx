@@ -1,4 +1,4 @@
-import { deleteNhanVien } from "@/apis/nhan-vien";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,8 +12,9 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
+import { deleteLichSuBhxh } from "@/apis/lich-su-bhxh";
 
-export function NhanVienAlert({
+export function LichSuBhxhAlert({
   open,
   setOpen,
   id,
@@ -23,7 +24,7 @@ export function NhanVienAlert({
   id: number;
 }) {
   const { mutate, isPending } = useMutation({
-    mutationFn: (id: number) => deleteNhanVien(id),
+    mutationFn: (id: number) => deleteLichSuBhxh(id),
   });
 
   const queryClient = useQueryClient();
@@ -33,7 +34,7 @@ export function NhanVienAlert({
       onSuccess: () => {
         setOpen(false);
         toast.success("Xóa nhân viên thành công");
-        queryClient.invalidateQueries({ queryKey: ["nhan-viens"] });
+        queryClient.invalidateQueries({ queryKey: ["lich-sus"], exact: false });
       },
       onError: () => {
         toast.error("Xóa nhân viên thất bại");
@@ -45,7 +46,7 @@ export function NhanVienAlert({
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Xóa nhân viên</AlertDialogTitle>
+          <AlertDialogTitle>Xóa thông tin</AlertDialogTitle>
           <AlertDialogDescription>
             Bạn có chắc chắn xóa dữ liệu này không ?
           </AlertDialogDescription>

@@ -1,7 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import {
-  BacLuongDto,
   NgachLuongDto,
   UpdateNgachLuongDto,
 } from './bac-luong.dto';
@@ -23,6 +22,20 @@ export class BacLuongService {
         },
       },
     });
+  }
+
+  async listNgachLuong(){
+    return await this.prisma.ngachLuong.findMany({
+      orderBy: {
+        soThuTu: 'asc',
+      },
+    })
+  }
+
+  async listBacLuongByNgachLuong(ngachLuongId:number){
+    return await this.prisma.bacLuong.findMany({
+      where: { ngachLuongId },
+    })
   }
 
   async store(data: NgachLuongDto) {

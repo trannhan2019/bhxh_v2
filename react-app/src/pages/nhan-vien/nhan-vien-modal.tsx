@@ -98,7 +98,7 @@ export function NhanVienModal({ open, setOpen, nhanVien }: Props) {
         form.reset();
         toast.success("Cập nhật thông tin thành công");
         queryClient.invalidateQueries({
-          queryKey: ["nhan-viens"],
+          queryKey: ["nhan-viens"],exact:false
         });
       },
       onError: () => {

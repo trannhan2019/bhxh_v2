@@ -1,5 +1,5 @@
 import axiosClient from "@/lib/axios-client";
-import type { TNgachLuong, TNgachLuongReq } from "@/types/bac-luong";
+import type { TBacLuong, TNgachLuong, TNgachLuongReq } from "@/types/bac-luong";
 
 const apiUrl = "/bac-luong";
 
@@ -7,6 +7,16 @@ export const getBacLuongs = async () => {
   const res = await axiosClient.get<TNgachLuong[]>(apiUrl);
   return res.data;
 };
+
+export const getNgachLuong = async () => {
+  const res = await axiosClient.get<TNgachLuong[]>(`${apiUrl}/ngach-luong`);
+  return res.data;
+}
+
+export const getBacLuongByNgachLuongId = async (ngachLuongId: number) => {
+  const res = await axiosClient.get<TBacLuong[]>(`${apiUrl}/ngach-luong/${ngachLuongId}`);
+  return res.data;
+}
 
 export const getBacLuongById = async (id: number) => {
   const res = await axiosClient.get<TNgachLuong>(`${apiUrl}/${id}`);

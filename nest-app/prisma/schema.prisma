@@ -18,6 +18,12 @@ model User {
   name     String
   email    String @unique
   password String
+  role     Role   @default(USER)
+}
+
+enum Role {
+  ADMIN
+  USER
 }
 
 model Phong {
@@ -48,10 +54,10 @@ model NhanVien {
 
   soThuTu      Int       @default(0)
   trangThai    Boolean   @default(true)
-  daNghiViec   DateTime?
   nhanVienVhsc Boolean   @default(false)
 
   bhxh Bhxh? 
+  lichSuBhxhs LichSuBhxh[]
 }
 
 model LuongToiThieuVung {
@@ -60,6 +66,7 @@ model LuongToiThieuVung {
   thoiGianApDung DateTime
   canCuPhapLy    String?
   apDung         Boolean  @default(false)
+  lichSuBhxhs LichSuBhxh[]
 }
 
 model NgachLuong {
@@ -71,6 +78,7 @@ model NgachLuong {
   bacLuongs BacLuong[]
 
   bhxhs Bhxh[]
+  lichSuBhxhs LichSuBhxh[]
 }
 
 model BacLuong {
@@ -83,6 +91,7 @@ model BacLuong {
   ngachLuong      NgachLuong @relation(fields: [ngachLuongId], references: [id])
 
   bhxhs Bhxh[]
+  lichSuBhxhs LichSuBhxh[]
 }
 
 model HeSo {
@@ -94,6 +103,9 @@ model HeSo {
   // # Quan hệ ngược
   bhxhChucVus     Bhxh[] @relation("bhxhChucVuRelation") 
   bhxhTrachNhiems Bhxh[] @relation("bhxhTrachNhiemRelation") 
+
+  lichSuChucVus LichSuBhxh[] @relation("licSuChucVuRelation")
+  lichSuTrachNhiems LichSuBhxh[] @relation("lichSuTrachNhiemRelation")
 }
 
 enum HeSoLoai {
@@ -122,4 +134,29 @@ model Bhxh {
   ngayApDung DateTime  
   ghiChu String?
   soThuTu Int @default(0)
+}
+
+model LichSuBhxh {
+  id        Int       @id @default(autoincrement())
+
+  nhanVienId Int 
+  nhanVien NhanVien @relation(fields: [nhanVienId], references: [id])
+
+  ngachLuongId Int
+  ngachLuong NgachLuong @relation(fields: [ngachLuongId], references: [id])
+
+  bacLuongId Int
+  bacLuong BacLuong @relation(fields: [bacLuongId], references: [id])
+
+  heSoChucVuId Int?
+  heSoChucVu HeSo? @relation("licSuChucVuRelation",fields: [heSoChucVuId], references: [id])
+
+  heSoTrachNhiemId Int?
+  heSoTrachNhiem HeSo? @relation("lichSuTrachNhiemRelation",fields: [heSoTrachNhiemId], references: [id])
+
+  luongToiThieuVungId Int
+  luongToiThieuVung LuongToiThieuVung @relation(fields: [luongToiThieuVungId], references: [id])
+
+  ngayApDung DateTime  
+  ghiChu String?
 }

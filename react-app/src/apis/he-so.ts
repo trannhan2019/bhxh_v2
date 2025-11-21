@@ -24,3 +24,8 @@ export const updateHeSo = (id: number, heSo: Omit<THeSo, "id">) => {
 export const deleteHeSo = (id: number) => {
   return axiosClient.delete(`${apiUrl}/${id}`);
 };
+
+export const getLoaiHeSo = async () => {
+  const res = await axiosClient.get<{chucVu:THeSo[],trachNhiem:THeSo[]}>(`${apiUrl}/loai`);
+  return res.data;
+};

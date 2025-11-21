@@ -4,17 +4,17 @@ import {
     InputGroupAddon,
     InputGroupInput,
 } from '@/components/ui/input-group';
-import type {  TNhanVienRes } from '@/types/nhan-vien';
+import type { TBhxhItem } from '@/types/bhxh';
 import { Plus, Search, Trash2 } from 'lucide-react';
 
 interface Props {
     search: string;
     setSearch: (search: string) => void;
-    handleOpenModal: (item: TNhanVienRes | null) => void;
+    handleOpenModal: (item: TBhxhItem | null) => void;
     handleSearchSubmit: (search: string) => void;
 }
 
-export function NhanVienHeader({ search, setSearch, handleOpenModal, handleSearchSubmit }: Props) {
+export function BhxhHeader({ search, setSearch, handleOpenModal, handleSearchSubmit }: Props) {
 
     const handleSearch = (value:string) => {
         // e.preventDefault();

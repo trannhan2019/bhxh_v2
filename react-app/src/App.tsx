@@ -12,6 +12,8 @@ const NhanVien = lazy(() => import("./pages/nhan-vien/nhan-vien"));
 const LuongToiThieuVung = lazy(() => import("./pages/luong-toi-thieu-vung/luong-toi-thieu-vung"));
 const BacLuong = lazy(() => import("./pages/bac-luong/bac-luong"));
 const HeSo = lazy(() => import("./pages/he-so/he-so"));
+const User = lazy(() => import("./pages/user/user"));
+const BhxhDetail = lazy(() => import("./pages/bhxh/bhxh-detail"));
 
 function App() {
   return (
@@ -30,12 +32,14 @@ function App() {
 
       <Route element={<AuthGuard><AppLayout /></AuthGuard>}>
         <Route path="/bhxh" element={<Bhxh />} />
+        <Route path="/bhxh/:id" element={<BhxhDetail />} />
         <Route path="/phong" element={<Phong />} />
         <Route path="/chuc-vu" element={<ChucVu />} />
         <Route path="/nhan-vien" element={<NhanVien />} />
         <Route path="/luong-toi-thieu-vung" element={<LuongToiThieuVung />} />
         <Route path="/bac-luong" element={<BacLuong />} />
         <Route path="/he-so" element={<HeSo />} />
+        <Route path="/user" element={<User />} />
       </Route>
     </Routes>
   );

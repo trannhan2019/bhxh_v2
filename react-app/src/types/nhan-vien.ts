@@ -1,35 +1,37 @@
+import type { TPhong } from "./phong";
 
-
-
-
-export type TNhanVien = {
+export interface TNhanVien {
   id: number;
   ten: string;
-  phongId:number;
-  chucVuId:number;
+  phongId: number;
+  chucVuId: number;
   soThuTu: number;
   trangThai: boolean;
-  nhanVienVhsc:boolean;
-  daNghiViec?: Date | null;
+  nhanVienVhsc: boolean;
+}
+
+export interface TNhanVienPhong extends TNhanVien {
+  phong: TPhong;
 }
 
 interface SelectOption {
   id: number;
   ten: string;
 }
+interface TBhxh{
+  id: number;
+}
 
 export type TNhanVienRes = {
   id: number;
   ten: string;
-  phong:SelectOption;
-  chucVu:SelectOption;
+  phong: SelectOption;
+  chucVu: SelectOption;
   soThuTu: number;
   trangThai: boolean;
-  nhanVienVhsc:boolean;
-  daNghiViec: Date | null;
+  nhanVienVhsc: boolean;
+  bhxh: TBhxh;
 };
-
-
 
 export const nhanVienDefaultValues: Omit<TNhanVien, "id"> = {
   ten: "",
@@ -38,5 +40,4 @@ export const nhanVienDefaultValues: Omit<TNhanVien, "id"> = {
   soThuTu: 0,
   trangThai: true,
   nhanVienVhsc: false,
-  daNghiViec: null,
 };

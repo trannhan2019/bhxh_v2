@@ -59,6 +59,64 @@ export const ngachLuongSchema = z.object({
 
 export const heSoSchema = z.object({
   chucDanh: z.string().min(1),
-  heSo: z.number().refine((v) => !Number.isNaN(v), { message: "Hệ số không hợp lệ" }).gt(0, "Hệ số phải lớn hơn 0"),
+  heSo: z
+    .number()
+    .refine((v) => !Number.isNaN(v), { message: "Hệ số không hợp lệ" })
+    .gt(0, "Hệ số phải lớn hơn 0"),
   loai: z.enum(["CHUC_VU", "TRACH_NHIEM"]),
+});
+
+export const bhxhSchema = z.object({
+  nhanVienId: z.coerce.number().min(1),
+  ngachLuongId: z.coerce.number().min(1),
+  bacLuongId: z.coerce.number().min(1),
+  heSoChucVuId: z.coerce.number().min(1).nullable(),
+  heSoTrachNhiemId: z.coerce.number().min(1).nullable(),
+  ngayApDung: z.preprocess(
+    (val) => (typeof val === "string" ? new Date(val) : val),
+    z.date()
+  ),
+  ghiChu: z.string().nullable(),
+  soThuTu: z.coerce.number().min(1).default(0),
+});
+
+export const lichSuBhxhSchema = z.object({
+  nhanVienId: z.coerce.number().min(1),
+  ngachLuongId: z.coerce.number().min(1),
+  bacLuongId: z.coerce.number().min(1),
+  heSoChucVuId: z.coerce.number().min(1).nullable(),
+  heSoTrachNhiemId: z.coerce.number().min(1).nullable(),
+  ngayApDung: z.preprocess(
+    (val) => (typeof val === "string" ? new Date(val) : val),
+    z.date()
+  ),
+  ghiChu: z.string().nullable(),
+  luongToiThieuVungId: z.coerce.number().min(1).default(0),
+});
+
+export const bhxhNangBacSchema = z.object({
+  ngayApDung: z.preprocess(
+    (val) => (typeof val === "string" ? new Date(val) : val),
+    z.date()
+  ),
+  ghiChu: z.string().nullable(),
+});
+
+export const bhxhChuyenNgachSchema = z.object({
+  ngachLuongId: z.coerce.number().min(1),
+  bacLuongId: z.coerce.number().min(1),
+  heSoChucVuId: z.coerce.number().min(1).nullable(),
+  heSoTrachNhiemId: z.coerce.number().min(1).nullable(),
+  ngayApDung: z.preprocess(
+    (val) => (typeof val === "string" ? new Date(val) : val),
+    z.date()
+  ),
+  ghiChu: z.string().nullable(),
+});
+
+export const userSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().min(1).email(),
+  password: z.string().optional(),
+  role: z.enum(["ADMIN", "USER"]),
 });

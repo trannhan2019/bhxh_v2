@@ -33,7 +33,7 @@ export function NhanVienAlert({
       onSuccess: () => {
         setOpen(false);
         toast.success("Xóa nhân viên thành công");
-        queryClient.invalidateQueries({ queryKey: ["nhan-viens"] });
+        queryClient.invalidateQueries({ queryKey: ["nhan-viens"],exact:false });
       },
       onError: () => {
         toast.error("Xóa nhân viên thất bại");

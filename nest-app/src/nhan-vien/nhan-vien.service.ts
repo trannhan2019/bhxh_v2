@@ -31,6 +31,11 @@ export class NhanVienService {
                 ten: true,
               },
             },
+            bhxh:{
+              select:{
+                id:true,
+              }
+            }
           },
         });
         const total = await this.prisma.nhanVien.count({
@@ -63,5 +68,17 @@ export class NhanVienService {
     
       async destroy(id: number) {
         return this.prisma.nhanVien.delete({ where: { id } });
+      }
+
+      async listNoBhxh() {
+        return this.prisma.nhanVien.findMany({
+          where: {
+            bhxh:null,
+            trangThai:true,
+          },
+          orderBy: {
+            soThuTu: 'asc',
+          },
+        })
       }
 }

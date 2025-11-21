@@ -7,6 +7,7 @@ import { ngachLuongData } from './mock/ngach-luong.data';
 import { bacLuongData } from './mock/bac-luong.data';
 import { heSoData } from './mock/he-so.data';
 import { bhxhData } from './mock/bhxh.data';
+import { lichSuBhxhData } from './mock/lich-su-bhxh.data';
 
 const prisma = new PrismaClient();
 
@@ -21,24 +22,26 @@ async function clearTable(tableName: string) {
 
 async function main() {
   // Xoá theo thứ tự để tránh lỗi khoá ngoại
+  await clearTable('LichSuBhxh');
   await clearTable('Bhxh');
   await clearTable('HeSo');
+  await clearTable('NhanVien');
   await clearTable('BacLuong');
   await clearTable('NgachLuong');
   await clearTable('LuongToiThieuVung');
-  await clearTable('NhanVien');
   await clearTable('ChucVu');
   await clearTable('Phong');
 
   // Insert lại dữ liệu
   await prisma.phong.createMany({ data: phongData });
   await prisma.chucVu.createMany({ data: chucvuData });
-  await prisma.nhanVien.createMany({ data: nhanVienData });
   await prisma.luongToiThieuVung.createMany({ data: luongToiThieuVungData });
   await prisma.ngachLuong.createMany({ data: ngachLuongData });
   await prisma.bacLuong.createMany({ data: bacLuongData });
   await prisma.heSo.createMany({ data: heSoData.map((item) => ({ ...item, loai: HeSoLoai[item.loai] })) });
+  await prisma.nhanVien.createMany({ data: nhanVienData });
   await prisma.bhxh.createMany({ data: bhxhData });
+  await prisma.lichSuBhxh.createMany({ data: lichSuBhxhData });
   console.log('Seed completed');
 }
 

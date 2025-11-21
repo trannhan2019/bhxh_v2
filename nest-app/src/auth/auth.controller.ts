@@ -6,9 +6,9 @@ import { LoginDto } from './auth.login.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('register')
-  async register() {
-    return await this.authService.register();
+  @Post('register/super-admin')
+  async registerSuperAdmin() {
+    return await this.authService.registerSuperAdmin();
   }
 
   @Post('login')

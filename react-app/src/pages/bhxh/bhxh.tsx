@@ -4,20 +4,22 @@ import type { OutletContext } from "@/types/layout";
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useCrudModal } from "@/hooks/use-crud-modal";
-import { getNhanViens } from "@/apis/nhan-vien";
-import { NhanVienHeader } from "./nhan-vien-header";
+
 import { usePhanTrang } from "@/hooks/use-phan-trang";
-import type { TNhanVienRes } from "@/types/nhan-vien";
-import { NhanVienList } from "./nhan-vien-list";
+import { BhxhList } from "./bhxh-list";
+
+import { BhxhAlert } from "./bhxh-alert";
+import { getBhxhs } from "@/apis/bhxh";
+import type { TBhxhItem } from "@/types/bhxh";
+import { BhxhHeader } from "./bhxh-header";
 import { PaginationList } from "@/components/pagination-list";
-import { NhanVienModal } from "./nhan-vien-modal";
-import { NhanVienAlert } from "./nhan-vien-alert";
+import { BhxhModal } from "./bhxh-modal";
 
 export default function BhxhPage() {
-  useDocumentTitle("SBA | CBNV");
+  useDocumentTitle("SBA | BHXH");
   const { setBreadcrumbs } = useOutletContext<OutletContext>();
   useEffect(() => {
-    setBreadcrumbs([{ title: "Quản lý CBNV", href: "/nhan-vien" }]);
+    setBreadcrumbs([{ title: "Quản lý BHXH", href: "/bhxh" }]);
   }, [setBreadcrumbs]);
 
   const {
@@ -29,42 +31,51 @@ export default function BhxhPage() {
     setOpenAlert,
     selectedId,
     handleOpenAlert,
-  } = useCrudModal<TNhanVienRes>();
-  const { search, setSearch, handleSearchSubmit, currentPage, pageSize, handlePageChange, handlePageSizeChange } =
-    usePhanTrang();
+  } = useCrudModal<TBhxhItem>();
+  const {
+    search,
+    setSearch,
+    handleSearchSubmit,
+    currentPage,
+    pageSize,
+    handlePageChange,
+    handlePageSizeChange,
+  } = usePhanTrang();
   const [debouncedSearchValue] = useDebounceValue(search, 1000);
 
-  const { data: nhanViens } = useQuery({
-    queryKey: ["nhan-viens", currentPage, pageSize, debouncedSearchValue],
-    queryFn: () => getNhanViens(currentPage, pageSize, debouncedSearchValue),
+  const { data: bhxhs } = useQuery({
+    queryKey: ["bhxhs", currentPage, pageSize, debouncedSearchValue],
+    queryFn: () => getBhxhs(currentPage, pageSize, debouncedSearchValue),
   });
 
   return (
     <div className="flex h-full flex-col p-4">
-      <NhanVienHeader
+      <BhxhHeader
         search={search}
         handleSearchSubmit={handleSearchSubmit}
         setSearch={setSearch}
         handleOpenModal={handleOpenModal}
       />
-      <NhanVienModal open={open} setOpen={setOpen} nhanVien={selectedItem} />
-      <NhanVienList
+
+      <BhxhModal open={open} setOpen={setOpen} bhxh={selectedItem} />
+      
+      <BhxhList
         currentPage={currentPage}
         pageSize={pageSize}
-        nhanViens={nhanViens?.data || []}
+        bhxhs={bhxhs?.data || []}
         handleOpenModal={handleOpenModal}
         handleOpenAlert={handleOpenAlert}
       />
       <PaginationList
-        totalCount={nhanViens?.total || 0}
+        totalCount={bhxhs?.total || 0}
         currentPage={currentPage}
         pageSize={pageSize}
         defaultValue={pageSize}
         handlePageChange={handlePageChange}
         handlePageSizeChange={handlePageSizeChange}
       />
-      
-      <NhanVienAlert open={openAlert} setOpen={setOpenAlert} id={selectedId} />
+
+      <BhxhAlert open={openAlert} setOpen={setOpenAlert} id={selectedId} />
     </div>
   );
 }
