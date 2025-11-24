@@ -8,7 +8,7 @@ import {
 import type { NavItem } from '@/types/layout';
 import { Link, useLocation } from 'react-router';
 
-export function NavQuanLy({ items = [] }: { items: NavItem[] }) {
+export function NavMain({ items = [] }: { items: NavItem[] }) {
     const location = useLocation();
     return (
         <SidebarGroup className="px-2 py-0">

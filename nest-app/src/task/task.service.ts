@@ -12,7 +12,7 @@ export class TaskService {
     private readonly emailService: EmailService,
   ) {}
 
-  @Cron(CronExpression.EVERY_30_MINUTES)
+  @Cron(CronExpression.EVERY_DAY_AT_10AM)
   async handleCron() {
     this.logger.log('Running scheduled job...');
     const data = await this.bhxhService.listGanDenHanNangBac();

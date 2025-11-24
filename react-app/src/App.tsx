@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import GuestGuard from "./components/guard/guest-guard";
 import AppLayout from "./layouts/app/app-layout";
+import AuthLayout from "./layouts/auth/auth-layout";
 import AuthGuard from "./components/guard/auth-guard";
 
 const Login = lazy(() => import("./pages/auth/login"));
@@ -24,7 +25,9 @@ function App() {
         path="/login"
         element={
           <GuestGuard>
-            <Login />
+            <AuthLayout>
+              <Login />
+            </AuthLayout>
           </GuestGuard>
         }
       />
