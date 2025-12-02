@@ -1,5 +1,5 @@
 import { usePagination, DOTS } from "@/hooks/use-pagination";
-import useQueryParams from "@/hooks/use-query-params";
+// import useQueryParams from "@/hooks/use-query-params";
 import {
   Pagination,
   PaginationContent,
